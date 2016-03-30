@@ -19,6 +19,9 @@
 		34C638081C7FF0D900F23A39 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34C638061C7FF0D900F23A39 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		34C6380B1C7FF0F700F23A39 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34C6380A1C7FF0F700F23A39 /* Alamofire.framework */; };
 		34C6380C1C7FF0F700F23A39 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34C6380A1C7FF0F700F23A39 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		34CFA9761C7FF8C50004ED64 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34CFA9741C7FF8C50004ED64 /* Fabric.framework */; };
+		34CFA9791C7FFE7E0004ED64 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34CFA9781C7FFE7E0004ED64 /* Crashlytics.framework */; };
+		34CFA9811C8003E00004ED64 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CFA9801C8003E00004ED64 /* Weather.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +73,9 @@
 		34C637FA1C7FED8A00F23A39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34C638061C7FF0D900F23A39 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		34C6380A1C7FF0F700F23A39 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		34CFA9741C7FF8C50004ED64 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		34CFA9781C7FFE7E0004ED64 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		34CFA9801C8003E00004ED64 /* Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +85,8 @@
 			files = (
 				34C638071C7FF0D900F23A39 /* SwiftyJSON.framework in Frameworks */,
 				34C6380B1C7FF0F700F23A39 /* Alamofire.framework in Frameworks */,
+				34CFA9791C7FFE7E0004ED64 /* Crashlytics.framework in Frameworks */,
+				34CFA9761C7FF8C50004ED64 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +114,8 @@
 				34C637EC1C7FED8A00F23A39 /* MyWeatherTests */,
 				34C637F71C7FED8A00F23A39 /* MyWeatherUITests */,
 				34C637D41C7FED8900F23A39 /* Products */,
+				34CFA9781C7FFE7E0004ED64 /* Crashlytics.framework */,
+				34CFA9741C7FF8C50004ED64 /* Fabric.framework */,
 				34C6380A1C7FF0F700F23A39 /* Alamofire.framework */,
 				34C638061C7FF0D900F23A39 /* SwiftyJSON.framework */,
 			);
@@ -129,6 +139,7 @@
 				34C637D61C7FED8900F23A39 /* AppDelegate.swift */,
 				34C637D81C7FED8900F23A39 /* MasterViewController.swift */,
 				34C637DA1C7FED8900F23A39 /* DetailViewController.swift */,
+				34CFA9801C8003E00004ED64 /* Weather.swift */,
 				34C637DF1C7FED8900F23A39 /* Assets.xcassets */,
 				34C637E41C7FED8900F23A39 /* Info.plist */,
 			);
@@ -165,6 +176,7 @@
 				34C637D11C7FED8900F23A39 /* Resources */,
 				34C638091C7FF0D900F23A39 /* Embed Frameworks */,
 				34C6380D1C7FF17800F23A39 /* ShellScript */,
+				34CFA9731C7FF6E70004ED64 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -300,6 +312,20 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
+		34CFA9731C7FF6E70004ED64 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 64fca987e5b58f802a2fc30c54a3ef8f6e82dc3f 6b4240073848588307d7c79cdfcf101a88f2daedd957f890bd09656f59836d30";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -307,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34CFA9811C8003E00004ED64 /* Weather.swift in Sources */,
 				34C637DB1C7FED8900F23A39 /* DetailViewController.swift in Sources */,
 				34C637D91C7FED8900F23A39 /* MasterViewController.swift in Sources */,
 				34C637D71C7FED8900F23A39 /* AppDelegate.swift in Sources */,
@@ -454,6 +481,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = MyWeather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -469,6 +497,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = MyWeather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -544,6 +573,7 @@
 				34C637FF1C7FED8A00F23A39 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		34C638001C7FED8A00F23A39 /* Build configuration list for PBXNativeTarget "MyWeatherTests" */ = {
 			isa = XCConfigurationList;
@@ -552,6 +582,7 @@
 				34C638021C7FED8A00F23A39 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		34C638031C7FED8A00F23A39 /* Build configuration list for PBXNativeTarget "MyWeatherUITests" */ = {
 			isa = XCConfigurationList;
@@ -560,6 +591,7 @@
 				34C638051C7FED8A00F23A39 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

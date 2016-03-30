@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -15,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+		Fabric.with([Answers.self, Crashlytics.self])
+		
 		// Override point for customization after application launch.
 		let splitViewController = self.window!.rootViewController as! UISplitViewController
 		let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController

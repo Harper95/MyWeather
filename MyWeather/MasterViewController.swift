@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class MasterViewController: UITableViewController {
-
+	
+	let apiKey: String = "523088988686ed552a8beddd5fa7686b"
+	
 	var detailViewController: DetailViewController? = nil
-	var objects = [AnyObject]()
+	var weather	= [Weather]()
 
 
 	override func viewDidLoad() {
@@ -25,6 +29,26 @@ class MasterViewController: UITableViewController {
 		    let controllers = split.viewControllers
 		    self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
 		}
+		
+		let url = NSURL(string: "http://api.openweathermap.org/data/2.5/forecast?lat=39.8361&lon=-105.0372&unit=imperial&appid=\(apiKey)")
+		Alamofire.request(.GET, url!).validate().responseJSON { response in
+			switch response.result {
+			case .Success:
+				if let value = response.result.value {
+					let json = JSON(value)
+					print("JSON: \(json["list"])")
+					// Parse
+					for obj in json["list"].arrayValue {
+						self.weather.append(Weather(dateAndTime: obj["dt_txt"].stringValue, temperature: obj["temp"].floatValue, main: obj["weather"][0]["main"].stringValue))
+					}
+					self.tableView.reloadData()
+					print(self.weather)
+				}
+			case .Failure(let error):
+				print(error)
+			}
+		}
+
 	}
 
 	override func viewWillAppear(animated: Bool) {
@@ -37,18 +61,18 @@ class MasterViewController: UITableViewController {
 		// Dispose of any resources that can be recreated.
 	}
 
-	func insertNewObject(sender: AnyObject) {
-		objects.insert(NSDate(), atIndex: 0)
-		let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-		self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-	}
+//	func insertNewObject(sender: AnyObject) {
+//		objects.insert(NSDate(), atIndex: 0)
+//		let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+//		self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//	}
 
 	// MARK: - Segues
 
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == "showDetail" {
 		    if let indexPath = self.tableView.indexPathForSelectedRow {
-		        let object = objects[indexPath.row] as! NSDate
+		        let object = weather[indexPath.row]
 		        let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
 		        controller.detailItem = object
 		        controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
@@ -64,14 +88,14 @@ class MasterViewController: UITableViewController {
 	}
 
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return objects.count
+		return weather.count
 	}
 
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 
-		let object = objects[indexPath.row] as! NSDate
-		cell.textLabel!.text = object.description
+		let object = weather[indexPath.row]
+		cell.textLabel!.text = object.shortDescription()
 		return cell
 	}
 
@@ -82,7 +106,7 @@ class MasterViewController: UITableViewController {
 
 	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
 		if editingStyle == .Delete {
-		    objects.removeAtIndex(indexPath.row)
+		    weather.removeAtIndex(indexPath.row)
 		    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
 		} else if editingStyle == .Insert {
 		    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
